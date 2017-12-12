@@ -15,7 +15,7 @@ public class inputData
         Connection conn = null;
         Statement stmt = null;
         Scanner scn = new Scanner(System.in);
-        String userName = null, userGender = null;
+        String userName = null, userGender = null, userId;
 
         try 
         {
@@ -38,10 +38,19 @@ public class inputData
             String sql = "INSERT INTO users values ('0','" + userName + "','" + userGender + "')";
             stmt.executeUpdate(sql);
 
-            String upd = "Update users set gender='perempuan' where userid=3";
+            System.out.print("\nEnter Name to Update: ");
+            userName = scn.nextLine();
+
+            System.out.print("Enter User Id to Set Update: ");
+            userId = scn.nextLine();
+
+            String upd = "Update users set name='"+ userName +"' where userid="+ userId +"";
             stmt.executeUpdate(upd);
 
-            String del = "delete from users where userid = 4";
+            System.out.print("\nEnter User Id to Set Delete: ");
+            userId = scn.nextLine();
+
+            String del = "delete from users where userid = "+ userId +"";
             stmt.executeUpdate(del);
 
             System.out.println(" SUCCESS!\n");
