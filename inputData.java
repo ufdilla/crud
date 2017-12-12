@@ -43,14 +43,20 @@ public class inputData
 
             String del = "delete from users where userid = 4";
             stmt.executeUpdate(del);
-            
+
             System.out.println(" SUCCESS!\n");
             System.out.println("Your Data was submitted.");
 
             String result = "select*from users";
-            System.out.println(stmt.executeQuery(result));
-        } 
-
+            // System.out.println(stmt.executeQuery(result));
+            ResultSet rs = stmt.executeQuery(result);
+            while (rs.next()) {
+                int userid = rs.getInt("userid");
+                String nama = rs.getString("name");
+                String gender = rs.getString("gender");
+                System.out.println(userid + "\t" + nama + "\t" + gender);
+            }
+        }
         catch (Exception e) 
         {
             e.printStackTrace();
