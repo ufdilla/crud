@@ -3,72 +3,64 @@ import java.util.*;
 
 public class inputData 
 {
-    
     static final String jdbcDriver = "com.mysql.jdbc.Driver";
     static final String dbUrl = "jdbc:mysql://localhost:3306/assignment";
-
     static final String user = "root";
     static final String pass = "umi123";
 
-    public static void main(String[] args) 
+    public static void main (String[] args) 
     {
         Connection conn = null;
-        Statement stmt = null;
-        Scanner scn = new Scanner(System.in);
+        Statement statement1 = null;
+        Scanner scan1 = new Scanner (System.in);
         String userName = null, userGender = null, userId;
 
         try 
-        {
-    
-            Class.forName("com.mysql.jdbc.Driver");
-
-            System.out.print("\nConnecting to database...");
-            conn = DriverManager.getConnection(dbUrl, user, pass);
-            System.out.println(" SUCCESS!\n");
-
-            System.out.print("Enter Your Name: ");
-            userName = scn.nextLine();
-
-            System.out.print("Enter your Gender: ");
-            userGender = scn.nextLine();
-
-            System.out.print("\nInserting records into table...");
-            stmt = conn.createStatement();
-
+        {   // java data base connector
+            Class.forName ("com.mysql.jdbc.Driver");
+            System.out.print ("\nConnecting to database...");
+            conn = DriverManager.getConnection (dbUrl, user, pass);
+            System.out.println (" SUCCESS!\n");
+            
+            // create
+            System.out.print ("Enter Your Name: ");
+            userName = scan1.nextLine ();
+            System.out.print ("Enter your Gender: ");
+            userGender = scan1.nextLine ();
+            statement1 = conn.createStatement ();
             String sql = "INSERT INTO users values ('0','" + userName + "','" + userGender + "')";
-            stmt.executeUpdate(sql);
-
-            System.out.print("\nEnter Name to Update: ");
-            userName = scn.nextLine();
-
-            System.out.print("Enter User Id to Set Update: ");
-            userId = scn.nextLine();
-
-            String upd = "Update users set name='"+ userName +"' where userid="+ userId +"";
-            stmt.executeUpdate(upd);
-
-            System.out.print("\nEnter User Id to Set Delete: ");
-            userId = scn.nextLine();
-
-            String del = "delete from users where userid = "+ userId +"";
-            stmt.executeUpdate(del);
-
-            System.out.println(" SUCCESS!\n");
-            System.out.println("Your Data was submitted.");
-
+            statement1.executeUpdate (sql);
+            
+            // read
             String result = "select*from users";
-            // System.out.println(stmt.executeQuery(result));
-            ResultSet rs = stmt.executeQuery(result);
-            while (rs.next()) {
-                int userid = rs.getInt("userid");
-                String nama = rs.getString("name");
-                String gender = rs.getString("gender");
-                System.out.println(userid + "\t" + nama + "\t" + gender);
+            ResultSet table1 = statement1.executeQuery (result);
+            while (table1.next ()) 
+            {
+                int userid = table1.getInt ("userid");
+                String nama = table1.getString ("name");
+                String gender = table1.getString ("gender");
+                System.out.println (userid + "\t" + nama + "\t" + gender);
             }
+        
+            // update
+            System.out.print ("\nEnter Name to Update: ");
+            userName = scan1.nextLine ();
+            System.out.print ("Enter User Id to Set Update: ");
+            userId = scan1.nextLine ();
+            String upd = "Update users set name='"+ userName +"' where userid="+ userId +"";
+            statement1.executeUpdate (upd);
+            
+            // delete
+            System.out.print ("\nEnter User Id to Set Delete: ");
+            userId = scan1.nextLine ();
+            String del = "delete from users where userid = "+ userId +"";
+            statement1.executeUpdate (del);
+            System.out.println (" SUCCESS!\n");
+            System.out.println ("Your Data was submitted.");
+
         }
+
         catch (Exception e) 
-        {
-            e.printStackTrace();
-        } 
+        { e.printStackTrace (); }
     }
 }
